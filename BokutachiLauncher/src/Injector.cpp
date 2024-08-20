@@ -123,6 +123,40 @@ int Injector()
 		throw;
 	}
 
+	// Tries to inject LR2OOl.dll.
+	try {
+		loc = VirtualAllocEx(hProc, 0, MAX_PATH, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+		if (loc == nullptr)
+		{
+			std::cout << "Couldn't allocate memory in the remote process\n";
+			throw ("No LR2OOL.dll found");
+		}
+
+		if (WriteProcessMemory(hProc, loc, "LR2OOL.dll", strlen(dllPath) + 1, 0) == 0)
+		{
+			std::cout << "Couldn't write .dll to LR2 memory\n";
+			throw ("No LR2OOL.dll found");
+		}
+
+
+		HANDLE hThread = CreateRemoteThread(hProc, 0, 0, (LPTHREAD_START_ROUTINE)LoadLibraryA, loc, 0, 0);
+
+		if (hThread != nullptr)
+		{
+			CloseHandle(hThread);
+		}
+
+		else
+		{
+			std::cout << "Couldn't start remote thread of the .dll\n";
+			throw ("No LR2GAS.dll found");
+		}
+	}
+	catch (const std::exception LR2OOLMissingException)
+	{
+		throw;
+	}
+
 
 	CloseHandle(hProc);
 
