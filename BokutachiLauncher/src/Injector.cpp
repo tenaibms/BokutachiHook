@@ -149,7 +149,7 @@ int Injector()
 		else
 		{
 			std::cout << "Couldn't start remote thread of the .dll\n";
-			throw ("No LR2GAS.dll found");
+			throw ("No LR2OOL.dll found");
 		}
 	}
 	catch (const std::exception LR2OOLMissingException)
