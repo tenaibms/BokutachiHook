@@ -123,9 +123,6 @@ int Injector()
 		throw;
 	}
 
-	// waits a bit (so that lr2 can load d3d9)
-	Sleep(300);
-
 	// Tries to inject LR2OOl.dll.
 	try {
 		loc = VirtualAllocEx(hProc, 0, MAX_PATH, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
